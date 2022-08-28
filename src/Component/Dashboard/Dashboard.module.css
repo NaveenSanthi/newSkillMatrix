@@ -1,0 +1,9 @@
+.entrollButtonContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+.enrollButton {
+  background-color: #403571;
+  color: white;
+  font-weight: 500;
+}
