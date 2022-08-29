@@ -14,10 +14,13 @@ const initialState = {
   Ccategory: [],
   CDummyValue: [],
   radioValue: "",
+  modalArray: [],
   modalValue: {
+    key: "",
     id: "",
     skill: "",
-    radioValue: "",
+    havingKnowledge: "",
+    interestToLearn: "",
   },
 };
 const FormReducers = createSlice({
@@ -25,8 +28,21 @@ const FormReducers = createSlice({
   initialState: initialState,
   reducers: {
     radioValueChange(state, action) {
-      state.radioValue = action.payload;
-      state.modalValue = { ...state.modalValue, radioValue: action.payload };
+      state.radioValue = action.payload.value;
+      console.log(action.payload);
+      if (action.payload.id === "1") {
+        state.modalValue = {
+          ...state.modalValue,
+          havingKnowledge: action.payload.value,
+          interestToLearn: "-",
+        };
+      } else {
+        state.modalValue = {
+          ...state.modalValue,
+          havingKnowledge: "-",
+          interestToLearn: action.payload.value,
+        };
+      }
     },
     AcategoryChangeHandler(state, action) {
       state.Acategory = action.payload;
@@ -61,9 +77,27 @@ const FormReducers = createSlice({
       state.CDummyValue = action.payload.value;
       state.modalValue = {
         ...state.modalValue,
-        skill: action.payload,
+        key: action.payload.ids,
+        skill: action.payload.value,
         id: action.payload.ids,
       };
+    },
+
+    addValueToArray(state) {
+      const ss = state.modalArray.push(state.modalValue);
+    },
+    clearAllValue(state) {
+      state.ADummyValue = [];
+      state.CDummyValue = [];
+      state.BDummyValue = [];
+      state.CDummyValue = [];
+      state.Bcategory = [];
+      state.Ccategory = [];
+      state.radioValue = "";
+      state.modalValue.id = "";
+      state.modalValue.skill = "";
+      state.modalValue.havingKnowledge = "";
+      state.modalValue.interestToLearn = "";
     },
   },
 });

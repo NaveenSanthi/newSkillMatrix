@@ -14,8 +14,10 @@ const Forms = () => {
   const BDummyValue = useSelector((state) => state.form.BDummyValue);
   const CComponentOpion = useSelector((state) => state.form.Ccategory);
   const CDummyValue = useSelector((state) => state.form.CDummyValue);
+  const radioValue = useSelector((state) => state.form.radioValue);
   const dispatch = useDispatch();
   const [modalValue, setModalValue] = useState(initialState);
+  const [form] = Form.useForm();
 
   const ASelectHandler = (value) => {
     console.log(value);
@@ -29,9 +31,12 @@ const Forms = () => {
     dispatch(FormReducerAction.BChangeHandler(value));
   };
   const radioButtonChange = (event) => {
-    dispatch(FormReducerAction.radioValueChange(event.target.value));
+    const value = event.target.value;
+    const id = event.target.in;
+    dispatch(FormReducerAction.radioValueChange({ value, id }));
   };
   const AChangeHandler = (value) => {
+    dispatch(FormReducerAction.ASelectDummyValue(value));
     dispatch(FormReducerAction.ASelectHandler(value));
   };
   const CChangeHandler = (value, obj) => {
@@ -42,9 +47,13 @@ const Forms = () => {
     });
   };
   return (
-    <Form labelCol={{ span: 7 }} wrapperCol={{ span: 14 }}>
+    <Form labelCol={{ span: 7 }} wrapperCol={{ span: 14 }} form={form}>
       <Form.Item label="Skill category">
-        <Select onSelect={ASelectHandler} onChange={AChangeHandler}>
+        <Select
+          onSelect={ASelectHandler}
+          onChange={AChangeHandler}
+          value={ADummyValue}
+        >
           {AComponentOption.map((data) => {
             return (
               <Select.Option key={data.id} id={data.id} value={data.skill}>
@@ -85,10 +94,14 @@ const Forms = () => {
         </Select>
       </Form.Item>
       <Form.Item>
-        <Radio.Group onChange={radioButtonChange}>
+        <Radio.Group onChange={radioButtonChange} value={radioValue}>
           <div className={classes.radioBtn}>
-            <Radio value="Having knowledge">Having knowledge</Radio>
-            <Radio value="Interested to learn"> Interested to learn </Radio>
+            <Radio value="Having knowledge" in="1">
+              Having knowledge
+            </Radio>
+            <Radio value="Interested to learn" in="2">
+              Interested to learn
+            </Radio>
           </div>
         </Radio.Group>
       </Form.Item>

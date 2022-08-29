@@ -16,12 +16,17 @@ const Column = [
   {
     key: "3",
     title: "Having Knowledge",
-    dataIndex: "radioValue",
+    dataIndex: "havingKnowledge",
+  },
+  {
+    key: "4",
+    title: "Interested To Learn",
+    dataIndex: "interestToLearn",
   },
 ];
 const Tables = () => {
-  const dataSource = useSelector((state) => state.form.modalValue);
-  return <Table columns={Column} dataSource={[dataSource]}></Table>;
+  const dataSource = useSelector((state) => state.form.modalArray);
+  return <Table columns={Column} dataSource={dataSource}></Table>;
 };
 
 export default Tables;
